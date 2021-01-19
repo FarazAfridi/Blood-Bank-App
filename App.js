@@ -1,21 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import thunk from 'redux-thunk';
+import { NavigationContainer } from "@react-navigation/native";
+import { MyStack } from './navigation/stackNavigation';
+import {createStore, combineReducers, applyMiddleware} from "redux";
+import { Provider } from 'react-redux';
+import bloodBankReducer from './store/reducer/bloodBankReducer';
 
 export default function App() {
+  const rootReducer = combineReducers({
+    blood: bloodBankReducer
+  })
+
+  const store = createStore(rootReducer, applyMiddleware(thunk))
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+   <NavigationContainer>
+   <Provider store={store}>
+     <MyStack />
+     </Provider>
+   </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
