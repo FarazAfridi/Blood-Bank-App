@@ -1,70 +1,65 @@
-import React from "react";
-import { useState } from "react";
-import { Text, View, StyleSheet, Button, TextInput, ScrollView } from "react-native";
+import React, { useEffect } from "react";
+import { Text, View, StyleSheet, ScrollView, LogBox, Button } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { useSelector, useDispatch } from "react-redux";
-import { addDonor } from "./../store/action/bloodBankActions";
+import { useSelector } from "react-redux";
 
 const DonorsPage = () => {
-  const dispatch = useDispatch();
-  const donors = useSelector((state) => state.blood.donors);
-  const [donorBloodGroup, setDonorBloodGroup] = useState("");
-  const [donorName, setDonorName] = useState("");
-  const id = Math.floor(Math.random() * 10000).toString();
-  const [donorLocation, setDonorLocation] = useState("");
+  const donors = useSelector((state) => state.blood.filteredDonors);
+
+  useEffect(() => {
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+  }, []);
 
   return (
-    <View>
-
-    <ScrollView>
-      <FlatList
-        data={donors}
-        renderItem={(itemData) => {
-          return (
-            <View style={styles.donorsContainer}>
-              <Text>{itemData.item.name}</Text>
-              <Text>{itemData.item.bloodGroup}</Text>
-            </View>
-          );
-        }}
-      />
+    <View style={styles.container}>
+      <ScrollView>
+          <FlatList
+            data={donors}
+            renderItem={(itemData) => {
+              return (
+                <View style={styles.donorsContainer}>
+                  <Text style={styles.bold}>
+                    Name: <Text style={styles.normal}>{itemData.item.name}</Text>
+                  </Text>
+                  <Text style={styles.bold}>
+                    Blood Group: <Text style={styles.normal}>{itemData.item.bloodGroup}</Text>
+                  </Text>
+                  <Text style={styles.bold}>
+                    Location: <Text style={styles.normal}> {itemData.item.location}</Text>
+                  </Text>
+                  <View style={{marginVertical: 10}}>
+                  <Button title="Contact Now" color="#B71C1C" />
+                  </View>
+                </View>
+              );
+            }}
+          />
       </ScrollView>
-      <View>
-        <TextInput
-          placeholder="Blood Group"
-          onChangeText={setDonorBloodGroup}
-        />
-        <TextInput placeholder="Donor Name" onChangeText={setDonorName} />
-        <TextInput
-          placeholder="Donor Location"
-          onChangeText={setDonorLocation}
-        />
-        <Button
-          title="Add Donor"
-          onPress={() =>
-            dispatch(
-              addDonor({
-                id,
-                name: donorName,
-                bloodGroup: donorBloodGroup,
-                location: donorLocation,
-              })
-            )
-          }
-        />
-      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center'
+  },
   donorsContainer: {
-    width: 300,
-    height: 100,
+    width: 280,
+    height: 150,
+    margin: 5,
     padding: 10,
     justifyContent: "center",
     alignItems: "center",
+    borderWidth: 3,
+    borderColor: "#B71C1C",
+    borderRadius: 10,
   },
+  bold: {
+    fontWeight: 'bold',
+  },
+  normal: {
+    fontWeight: 'normal'
+  }
 });
 
 export default DonorsPage;

@@ -1,68 +1,29 @@
-import React from "react";
-import { useState } from "react";
-import { Button, View, Text, TextInput, StyleSheet } from "react-native";
-import { useDispatch } from "react-redux";
-import { findDonor } from "../store/action/bloodBankActions";
-import { CheckBox } from "native-base";
+import React from 'react';
+import {View, Button, Text, StyleSheet, TouchableNativeFeedback} from "react-native";
 
-const Homepage = ({ navigation }) => {
-  const [bloodGroup, setBloodGroup] = useState("");
-  const [location, setLocation] = useState("");
-  const [bg, setBg] = useState(false);
-  const dispatch = useDispatch();
-
-  return (
-    <View>
-      <View style={styles.Container}>
-        <View>
-          <Text>Blood Group :</Text>
-        </View>
-        <View style={styles.inputContainer}>
-          <View style={styles.input}>
-            <CheckBox checked={bg} onPress={() => setBg(!bg)} />
-            <Text style={styles.text}>A</Text>
-          </View>
-          <View style={styles.input}>
-            <CheckBox checked={bg} onPress={() => setBg(!bg)} />
-            <Text style={styles.text}>B</Text>
-          </View>
-          <View style={styles.input}>
-            <CheckBox checked={bg} onPress={() => setBg(!bg)} />
-            <Text style={styles.text}>AB</Text>
-          </View>
-        </View>
-      </View>
-
-      {/* <TextInput placeholder="Blood Group" onChangeText={setBloodGroup} />
-      <TextInput placeholder="Location" onChangeText={setLocation} /> */}
-
-      <Button
-        title="Move to Donors"
-        onPress={() => {
-          navigation.navigate("Donors");
-          dispatch(findDonor({ bloodGroup: bloodGroup, location }));
-        }}
-      />
+const Homepage = (props) => {
+  return ( 
+    <View style={styles.container}>
+    <TouchableNativeFeedback useForeground={true}>
+      <Text style={styles.text} onPress={() => props.navigation.navigate("Donation")}>Wanna donate blood ?</Text>
+      </TouchableNativeFeedback>
+      <Text style={styles.text} onPress={() => props.navigation.navigate("Find Donor")}>Need Blood ?</Text>
     </View>
-  );
-};
+   );
+}
 
 const styles = StyleSheet.create({
-  Container: {
-    width: 300,
-  },
-  inputContainer: {
-    flexDirection: "column",
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1
   },
   text: {
-      margin: 10,
-      padding: 10
-  },
-  input: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      padding: 10
+    fontWeight: 'bold',
+    fontSize: 26,
+    padding: 10,
+    color: "#B71C1C"
   }
-});
-
+})
+ 
 export default Homepage;
