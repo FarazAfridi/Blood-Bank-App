@@ -4,10 +4,10 @@ import {
   View,
   Text,
   StyleSheet,
-  Picker,
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { findDonor } from "../store/action/bloodBankActions";
+import ItemPicker from "./../components/picker";
 
 const FindDonor = ({ navigation }) => {
   const [location, setLocation] = useState("");
@@ -16,44 +16,47 @@ const FindDonor = ({ navigation }) => {
 
   return (
     <View>
-      <View style={styles.Container}>
+      <View>
         <View>
-          <Text style={styles.text}>Blood Group :</Text>
+          <ItemPicker
+            title="Blood Group"
+            stateValue={bloodGroup}
+            setStateValue={setBloodGroup}
+            label1="Blood Group"
+            label2="A"
+            label3="B"
+            label4="AB"
+            label5="O"
+            value1=""
+            value2="A"
+            value3="B"
+            value4="AB"
+            value5="O"
+          />
         </View>
-        <View>
-        <Picker
-          selectedValue={bloodGroup}
-          style={{ height: 50, width: 200, margin: 10 }}
-          onValueChange={(itemValue, itemIndex) => setBloodGroup(itemValue)}
-        >
-          <Picker.Item label="Blood Group" value="" />
-          <Picker.Item label="A" value="A" />
-          <Picker.Item label="B" value="B" />
-          <Picker.Item label="AB" value="AB" />
-          <Picker.Item label="O" value="O" />
-        </Picker>
       </View>
 
-      </View>
-      <View>
-        <Text style={styles.text}>Location:</Text>
-        <Picker
-          selectedValue={location}
-          style={{ height: 50, width: 200, margin: 10 }}
-          onValueChange={(itemValue, itemIndex) => setLocation(itemValue)}
-        >
-          <Picker.Item label="location" value="" />
-          <Picker.Item label="Karachi" value="Karachi" />
-          <Picker.Item label="Lahore" value="Lahore" />
-          <Picker.Item label="Islamabad" value="Islamabad" />
-          <Picker.Item label="Quetta" value="Quetta" />
-        </Picker>
-      </View>
+      <ItemPicker
+        title="Location"
+        stateValue={location}
+        setStateValue={setLocation}
+        label1="Location"
+        label2="Karachi"
+        label3="Lahore"
+        label4="Islamabad"
+        label5="Quetta"
+        value1=""
+        value2="Karachi"
+        value3="Lahore"
+        value4="Islamabad"
+        value5="Quetta"
+      />
+
       <Button
         title="Move to Donors"
         color="red"
         onPress={() => {
-          navigation.navigate("Donors");
+          navigation.navigate("Donor");
           dispatch(findDonor({ bloodGroup, location }));
         }}
       />
@@ -62,19 +65,8 @@ const FindDonor = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  Container: {
-  },
   inputContainer: {
-    paddingVertical: 10
-  },
-  text: {
-    marginLeft: 10,
-    padding: 8,
-  },
-  input: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 10,
+    paddingVertical: 10,
   },
 });
 

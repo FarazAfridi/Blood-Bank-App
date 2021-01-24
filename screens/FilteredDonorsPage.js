@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet, ScrollView, LogBox } from "react-native";
+import { Text, View, StyleSheet, ScrollView, LogBox, Button } from "react-native";
 import { useSelector } from "react-redux";
 import DonorsList from './../components/donorsList';
 
-const DonorsPage = () => {
-  const donors = useSelector((state) => state.blood.donors);
+const FilteredDonorsPage = () => {
+  const donors = useSelector((state) => state.blood.filteredDonors);
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
@@ -13,7 +13,7 @@ const DonorsPage = () => {
   return (
     <View style={styles.container}>
       <ScrollView>
-       <DonorsList donors={donors} />
+          <DonorsList donors={donors} />
       </ScrollView>
     </View>
   );
@@ -25,4 +25,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DonorsPage;
+export default FilteredDonorsPage;
