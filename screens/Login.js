@@ -26,10 +26,10 @@ const Login = (props) => {
       if (!token) {
         return;
       }
-      
-      dispatch(userExist(token))
+
+      dispatch(userExist(token));
     };
-    checkIfLogin()
+    checkIfLogin();
   }, [error]);
 
   const handleSubmit = async (email, password) => {
@@ -51,15 +51,26 @@ const Login = (props) => {
   };
 
   return (
-    <View>
-      {isLogin ? null : <TextInput placeholder="Username" />}
-      <TextInput placeholder="Email" onChangeText={setEmail} />
-      <TextInput placeholder="Password" onChangeText={setPassword} />
+    <View style={styles.container}>
+      {isLogin ? null : (
+        <TextInput style={styles.input} placeholder="Username" />
+      )}
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        onChangeText={setEmail}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        onChangeText={setPassword}
+      />
       <Button
         title={isLogin ? "Login" : "Sign Up"}
         onPress={() => handleSubmit(email, password)}
+        color="#B71C1C"
       />
-      <Text onPress={() => setIsLogin(!isLogin)}>
+      <Text style={styles.text} onPress={() => setIsLogin(!isLogin)}>
         {isLogin
           ? "Dont have an account SignUp"
           : "Already have an account Login"}
@@ -67,5 +78,20 @@ const Login = (props) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 10,
+  },
+  input: {
+    borderBottomWidth: 2,
+    marginBottom: 10,
+    borderColor: "#B71C1C",
+  },
+  text: { 
+    textAlign: "center", 
+    padding: 10,
+    color: "#B71C1C" },
+});
 
 export default Login;

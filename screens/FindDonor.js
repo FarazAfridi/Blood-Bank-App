@@ -54,7 +54,7 @@ const FindDonor = ({ navigation }) => {
 
       <Button
         title="Move to Donors"
-        color="red"
+        color="#B71C1C"
         onPress={() => {
           navigation.navigate("Donor");
           dispatch(findDonor({ bloodGroup, location }));

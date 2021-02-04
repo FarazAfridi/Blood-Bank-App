@@ -1,31 +1,33 @@
-import React, {useEffect} from "react";
-import { View, Text, StyleSheet, TouchableNativeFeedback } from "react-native";
-import { useDispatch } from 'react-redux';
-import { fetchDonors } from './../store/action/bloodBankActions';
+import React, { useEffect } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { useDispatch } from "react-redux";
+import { fetchDonors } from "./../store/action/bloodBankActions";
 
 const Homepage = (props) => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchDonors())
-  }, [dispatch])
+    dispatch(fetchDonors());
+  }, [dispatch]);
   return (
     <View style={styles.container}>
-      <TouchableNativeFeedback useForeground={true}>
-        <Text
-          style={styles.text}
-          onPress={() => {
-            props.navigation.navigate("Donation");
-          }}
-        >
-          Wanna donate blood ?
-        </Text>
-      </TouchableNativeFeedback>
-      <Text
-        style={styles.text}
+      <TouchableOpacity
+        activeOpacity={0.6}
+        onPress={() => {
+          props.navigation.navigate("Donation");
+        }}
+      >
+        <View>
+          <Text style={styles.text}>Wanna donate blood ?</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        activeOpacity={0.6}
         onPress={() => props.navigation.navigate("Find Donor")}
       >
-        Need Blood ?
-      </Text>
+        <View>
+          <Text style={styles.text}>Need Blood ?</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };

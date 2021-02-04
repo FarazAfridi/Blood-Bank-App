@@ -1,4 +1,4 @@
-import { SIGN_UP, LOGIN, USER_EXIST } from "./../action/authActions";
+import { SIGN_UP, LOGIN, USER_EXIST, LOGOUT } from "./../action/authActions";
 const initialState = {
   token: null,
 };
@@ -17,6 +17,8 @@ export default (state = initialState, action) => {
       return {
         token: action.payload
       }
+    case LOGOUT:
+      return initialState
     default:
       return state;
   }
